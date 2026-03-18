@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kalkulačka klimatizace – Libánský Klimatizace</title>
+  <meta name="description" content="Interaktivní průvodce výběrem klimatizace. Zadejte rozměry místností a získejte doporučený výkon a orientační cenu montáže." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Wizard layout ── */
+    .calc-hero {
+      background: linear-gradient(135deg, var(--blue-900) 0%, var(--blue-800) 60%, #1a4a7a 100%);
+      padding: 120px 0 60px;
+      text-align: center;
+      color: var(--white);
+    }
+    .calc-hero__badge {
+      display: inline-block;
+      background: rgba(255,255,255,.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 999px;
+      padding: 6px 18px;
+      font-size: .85rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+    .calc-hero h1 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+    .calc-hero p {
+      font-size: 1.1rem;
+      opacity: .85;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* ── Progress bar ── */
+    .wizard-progress {
+      background: var(--gray-100);
+      padding: 24px 0;
+      position: sticky;
+      top: 68px;
+      z-index: 50;
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .wizard-progress__inner {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .wp-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+      position: relative;
+    }
+    .wp-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 18px;
+      left: calc(50% + 18px);
+      right: calc(-50% + 18px);
+      height: 2px;
+      background: var(--gray-200);
+      transition: background .4s;
+    }
+    .wp-step.done:not(:last-child)::after,
+    .wp-step.active:not(:last-child)::after {
+      background: var(--blue-600);
+    }
+    .wp-step__dot {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: 700;
+      background: var(--gray-200);
+      color: var(--gray-500);
+      transition: all .3s;
+      z-index: 1;
+    }
+    .wp-step.active .wp-step__dot {
+      background: var(--blue-600);
+      color: var(--white);
+      box-shadow: 0 0 0 4px rgba(37,99,235,.2);
+    }
+    .wp-step.done .wp-step__dot {
+      background: var(--blue-500);
+      color: var(--white);
+    }
+    .wp-step__label {
+      font-size: .7rem;
+      font-weight: 600;
+      color: var(--gray-400);
+      text-align: center;
+      white-space: nowrap;
+    }
+    .wp-step.active .wp-step__label,
+    .wp-step.done .wp-step__label {
+      color: var(--blue-600);
+    }
+
+    /* ── Wizard body ── */
+    .wizard-wrap {
+      padding: 48px 0 80px;
+      min-height: 60vh;
+    }
+    .wizard-card {
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 40px 44px;
+      border: 1px solid var(--gray-200);
+    }
+    @media (max-width: 600px) {
+      .wizard-card { padding: 28px 20px; }
+    }
+    .step-panel { display: none; animation: fadeSlide .35s ease both; }
+    .step-panel.active { display: block; }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .step-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 6px;
+    }
+    .step-subtitle {
+      font-size: .95rem;
+      color: var(--gray-500);
+      margin-bottom: 28px;
+    }
+
+    /* ── Room count chooser ── */
+    .room-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    @media (max-width: 480px) { .room-grid { grid-template-columns: repeat(3, 1fr); } }
+    .room-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 8px;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--gray-200);
+      background: var(--white);
+      transition: all var(--transition);
+      cursor: pointer;
+      font-family: var(--font);
+    }
+    .room-btn:hover {
+      border-color: var(--blue-400);
+      background: var(--blue-50);
+      transform: translateY(-2px);
+    }
+    .room-btn.selected {
+      border-color: var(--blue-600);
+      background: var(--blue-50);
+      box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+    }
+    .room-btn__icon { font-size: 1.9rem; line-height: 1; }
+    .room-btn__label { font-size: .8rem; font-weight: 600; color: var(--gray-700); }
+
+    /* ── System type ── */
+    .system-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+    .system-btn {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 20px;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--gray-200);
+      background: var(--white);
+      cursor: pointer;
+      transition: all var(--transition);
+      font-family: var(--font);
+      text-align: left;
+    }
+    .system-btn:hover {
+      border-color: var(--blue-400);
+      background: var(--blue-50);
+    }
+    .system-btn.selected {
+      border-color: var(--blue-600);
+      background: var(--blue-50);
+      box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+    }
+    .system-btn__icon { font-size: 2rem; flex-shrink: 0; }
+    .system-btn__name { font-size: 1rem; font-weight: 700; color: var(--gray-900); }
+    .system-btn__desc { font-size: .85rem; color: var(--gray-500); margin-top: 2px; }
+
+    /* ── Room sliders ── */
+    .room-sliders { display: flex; flex-direction: column; gap: 24px; margin-bottom: 32px; }
+    .room-slider-item {
+      background: var(--gray-50);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      border: 1px solid var(--gray-200);
+    }
+    .room-slider-item__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .room-slider-item__name { font-weight: 700; color: var(--gray-800); font-size: .95rem; }
+    .room-slider-item__val {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--blue-600);
+    }
+    input[type=range] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--gray-200);
+      outline: none;
+      cursor: pointer;
+      accent-color: var(--blue-600);
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--blue-600);
+      box-shadow: 0 2px 8px rgba(37,99,235,.4);
+      transition: transform .15s;
+    }
+    input[type=range]:hover::-webkit-slider-thumb { transform: scale(1.15); }
+    .slider-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: .75rem;
+      color: var(--gray-400);
+      margin-top: 6px;
+    }
+
+    /* ── Results ── */
+    .result-section { margin-bottom: 28px; }
+    .result-section__title {
+      font-size: .8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--gray-500);
+      margin-bottom: 14px;
+    }
+
+    .room-result-cards { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+    .room-result-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      border-radius: var(--radius-md);
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+    }
+    .room-result-card__name { font-weight: 600; color: var(--gray-800); font-size: .9rem; }
+    .room-result-card__meta { font-size: .8rem; color: var(--gray-500); }
+    .room-result-card__kw {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--blue-600);
+    }
+    .kw-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: .8rem;
+      font-weight: 700;
+      margin-left: 8px;
+    }
+    .kw-badge--ok { background: #dcfce7; color: #16a34a; }
+    .kw-badge--low { background: #fee2e2; color: #dc2626; }
+    .kw-badge--high { background: #fff7ed; color: #ea580c; }
+
+    .alert-box {
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: .9rem;
+      margin-bottom: 10px;
+    }
+    .alert-box--red { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }
+    .alert-box--orange { background: #fff7ed; border: 1px solid #fed7aa; color: #9a3412; }
+    .alert-box__icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+
+    .price-summary {
+      background: linear-gradient(135deg, var(--blue-600), var(--blue-700));
+      border-radius: var(--radius-lg);
+      padding: 28px 28px;
+      color: var(--white);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .price-summary__label { font-size: .85rem; opacity: .8; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
+    .price-summary__amount { font-size: 2.4rem; font-weight: 800; margin-bottom: 4px; }
+    .price-summary__sub { font-size: .85rem; opacity: .75; }
+
+    .price-breakdown {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: .9rem;
+      color: var(--gray-700);
+      padding: 8px 0;
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .price-row:last-child { border-bottom: none; }
+    .price-row__value { font-weight: 700; color: var(--gray-900); }
+    .price-note {
+      font-size: .8rem;
+      color: var(--gray-400);
+      margin-top: 4px;
+    }
+
+    /* ── Prefilled contact ── */
+    .prefilled-label {
+      background: var(--blue-50);
+      border: 1px solid var(--blue-100);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      font-size: .85rem;
+      color: var(--blue-700);
+      margin-bottom: 20px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    /* ── Nav buttons ── */
+    .wizard-nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 8px;
+      padding-top: 24px;
+      border-top: 1px solid var(--gray-100);
+    }
+    .btn--ghost {
+      background: var(--gray-100);
+      color: var(--gray-700);
+    }
+    .btn--ghost:hover { background: var(--gray-200); }
+    .btn--full { width: 100%; justify-content: center; }
+
+    /* ── Summary table in results ── */
+    .kw-total-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--blue-50);
+      border: 1px solid var(--blue-100);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      margin-top: 10px;
+    }
+    .kw-total-row__label { font-weight: 700; color: var(--blue-800); }
+    .kw-total-row__val { font-size: 1.5rem; font-weight: 800; color: var(--blue-600); }
+
+    /* restart btn */
+    .restart-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .85rem;
+      color: var(--gray-500);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px 0;
+      margin-top: 12px;
+      transition: color var(--transition);
+    }
+    .restart-btn:hover { color: var(--blue-600); }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="index.html#hero" class="nav__logo">
+        <span class="nav__logo-icon">❄</span>
+        <span>Libánský <span class="nav__logo-sub">Klimatizace</span></span>
+      </a>
+      <ul class="nav__list" id="navList">
+        <li><a href="index.html#sluzby" class="nav__link">Služby</a></li>
+        <li><a href="index.html#proc-my" class="nav__link">Proč my?</a></li>
+        <li><a href="index.html#cenik" class="nav__link">Ceník</a></li>
+        <li><a href="kalkulator.html" class="nav__link nav__link--active">Kalkulačka 🧮</a></li>
+        <li><a href="index.html#kontakt" class="nav__link nav__link--cta">Kontakt</a></li>
+      </ul>
+      <button class="nav__hamburger" id="hamburger" aria-label="Otevřít menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <div class="calc-hero">
+    <div class="container">
+      <div class="calc-hero__badge">Zdarma a bez závazků</div>
+      <h1>Kalkulačka klimatizace 🧮</h1>
+      <p>Zjistěte doporučený výkon a orientační cenu do 2 minut. Stačí zadat rozměry místností.</p>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="wizard-progress">
+    <div class="wizard-progress__inner" id="progressBar">
+      <div class="wp-step active" data-step="1">
+        <div class="wp-step__dot">1</div>
+        <div class="wp-step__label">Místnosti</div>
+      </div>
+      <div class="wp-step" data-step="2">
+        <div class="wp-step__dot">2</div>
+        <div class="wp-step__label">Systém</div>
+      </div>
+      <div class="wp-step" data-step="3">
+        <div class="wp-step__dot">3</div>
+        <div class="wp-step__label">Rozměry</div>
+      </div>
+      <div class="wp-step" data-step="4">
+        <div class="wp-step__dot">4</div>
+        <div class="wp-step__label">Výsledek</div>
+      </div>
+      <div class="wp-step" data-step="5">
+        <div class="wp-step__dot">5</div>
+        <div class="wp-step__label">Nabídka</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WIZARD -->
+  <div class="wizard-wrap">
+    <div class="container">
+      <div class="wizard-card">
+
+        <!-- ══ STEP 1 – počet místností ══ -->
+        <div class="step-panel active" id="step1">
+          <div class="step-title">Kolik místností chcete klimatizovat? 🏠</div>
+          <div class="step-subtitle">Vyberte počet místností, pro které hledáte klimatizaci.</div>
+          <div class="room-grid">
+            <button class="room-btn" data-rooms="1">
+              <span class="room-btn__icon">🛋️</span>
+              <span class="room-btn__label">1 pokoj</span>
+            </button>
+            <button class="room-btn" data-rooms="2">
+              <span class="room-btn__icon">🏠</span>
+              <span class="room-btn__label">2 pokoje</span>
+            </button>
+            <button class="room-btn" data-rooms="3">
+              <span class="room-btn__icon">🏡</span>
+              <span class="room-btn__label">3 pokoje</span>
+            </button>
+            <button class="room-btn" data-rooms="4">
+              <span class="room-btn__icon">🏘️</span>
+              <span class="room-btn__label">4 pokoje</span>
+            </button>
+            <button class="room-btn" data-rooms="5">
+              <span class="room-btn__icon">🏢</span>
+              <span class="room-btn__label">5 a více</span>
+            </button>
+          </div>
+          <div class="wizard-nav">
+            <span></span>
+            <button class="btn btn--primary" id="s1next" disabled>Pokračovat →</button>
+          </div>
+        </div>
+
+        <!-- ══ STEP 2 – typ systému ══ -->
+        <div class="step-panel" id="step2">
+          <div class="step-title">Jaký typ systému vás zajímá? ❄️</div>
+          <div class="step-subtitle">Doporučujeme na základě počtu místností, ale finální volba je na vás.</div>
+          <div class="system-grid">
+            <button class="system-btn" data-system="split">
+              <span class="system-btn__icon">🔹</span>
+              <div>
+                <div class="system-btn__name">Split 1+1</div>
+                <div class="system-btn__desc">Jedna vnitřní + jedna vnější jednotka. Ideální pro 1 místnost.</div>
+              </div>
+            </button>
+            <button class="system-btn" data-system="multisplit">
+              <span class="system-btn__icon">🔷</span>
+              <div>
+                <div class="system-btn__name">Multisplit (1 vnější, více vnitřních)</div>
+                <div class="system-btn__desc">Jedna vnější jednotka zásobuje 2–5 místností. Kompaktnější řešení.</div>
+              </div>
+            </button>
+            <button class="system-btn" data-system="multi">
+              <span class="system-btn__icon">🔶</span>
+              <div>
+                <div class="system-btn__name">Více samostatných jednotek</div>
+                <div class="system-btn__desc">Každá místnost má vlastní split systém. Maximální flexibilita.</div>
+              </div>
+            </button>
+          </div>
+          <div class="wizard-nav">
+            <button class="btn btn--ghost" id="s2back">← Zpět</button>
+            <button class="btn btn--primary" id="s2next" disabled>Pokračovat →</button>
+          </div>
+        </div>
+
+        <!-- ══ STEP 3 – velikosti místností ══ -->
+        <div class="step-panel" id="step3">
+          <div class="step-title">Jak velké jsou vaše místnosti? 📐</div>
+          <div class="step-subtitle">Posuňte jezdec na plochu každé místnosti v m².</div>
+          <div class="room-sliders" id="roomSliders"></div>
+          <div class="wizard-nav">
+            <button class="btn btn--ghost" id="s3back">← Zpět</button>
+            <button class="btn btn--primary" id="s3next">Spočítat →</button>
+          </div>
+        </div>
+
+        <!-- ══ STEP 4 – výsledky ══ -->
+        <div class="step-panel" id="step4">
+          <div class="step-title">Výsledky výpočtu ⚡</div>
+          <div class="step-subtitle">Doporučené výkony jsou orientační. Přesná specifikace záleží na izolaci a orientaci místnosti.</div>
+
+          <div class="result-section">
+            <div class="result-section__title">Doporučený výkon po místnostech</div>
+            <div class="room-result-cards" id="roomResultCards"></div>
+            <div class="kw-total-row">
+              <span class="kw-total-row__label">Celkový výkon</span>
+              <span class="kw-total-row__val" id="totalKw">—</span>
+            </div>
+          </div>
+
+          <div id="warningsContainer"></div>
+
+          <div class="wizard-nav">
+            <button class="btn btn--ghost" id="s4back">← Zpět</button>
+            <button class="btn btn--primary" id="s4next">Zobrazit cenu →</button>
+          </div>
+        </div>
+
+        <!-- ══ STEP 5 – cena + nabídka ══ -->
+        <div class="step-panel" id="step5">
+          <div class="step-title">Orientační cena 💰</div>
+          <div class="step-subtitle">Cena zahrnuje montáž a zařízení. Přesná nabídka po konzultaci.</div>
+
+          <div class="price-summary">
+            <div class="price-summary__label">Celková orientační cena vč. DPH</div>
+            <div class="price-summary__amount" id="finalPrice">—</div>
+            <div class="price-summary__sub">Zařízení + montáž + zprovoznění</div>
+          </div>
+
+          <div class="result-section">
+            <div class="result-section__title">Rozpad ceny</div>
+            <div class="price-breakdown" id="priceBreakdown"></div>
+            <div class="price-note">* Ceny jsou orientační bez DPH → zobrazená cena je vč. 21 % DPH. Nezahrnují možné příplatky za komplikované trasy nebo speciální materiál.</div>
+          </div>
+
+          <div class="prefilled-label">
+            <span>📋</span>
+            <span>Po kliknutí níže se automaticky předvyplní kontaktní formulář s vaší konfigurací – stačí doplnit kontaktní údaje.</span>
+          </div>
+
+          <a href="index.html#kontakt" class="btn btn--primary btn--full" id="offerBtn">
+            Chci nezávaznou nabídku 📩
+          </a>
+
+          <div style="text-align:center;">
+            <button class="restart-btn" id="restartBtn">↩ Začít znovu</button>
+          </div>
+
+          <div class="wizard-nav" style="border-top:none; padding-top:0;">
+            <button class="btn btn--ghost" id="s5back">← Zpět</button>
+            <span></span>
+          </div>
+        </div>
+
+      </div><!-- /wizard-card -->
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer__content">
+      <div class="footer__brand">
+        <a href="index.html#hero" class="nav__logo">
+          <span class="nav__logo-icon">❄</span>
+          <span>Libánský <span class="nav__logo-sub">Klimatizace</span></span>
+        </a>
+        <p>Profesionální montáž a servis klimatizací a tepelných čerpadel v&nbsp;Praze a&nbsp;okrese Mělník.</p>
+      </div>
+      <div class="footer__links">
+        <h4>Služby</h4>
+        <ul>
+          <li><a href="index.html#sluzby">Montáž klimatizace</a></li>
+          <li><a href="index.html#sluzby">Servis a údržba</a></li>
+          <li><a href="index.html#sluzby">Tepelná čerpadla</a></li>
+          <li><a href="index.html#sluzby">Diagnostika</a></li>
+        </ul>
+      </div>
+      <div class="footer__links">
+        <h4>Kontakt</h4>
+        <ul>
+          <li><a href="tel:+420777000000">+420 777 000 000</a></li>
+          <li><a href="mailto:info@klimatizace-libansky.cz">info@klimatizace-libansky.cz</a></li>
+          <li>Praha &amp; okres Mělník</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <p>© 2025 Jaroslav Libánský – Klimatizace &amp; Tepelná čerpadla. Všechna práva vyhrazena.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+  (() => {
+    /* ── State ── */
+    const state = { rooms: 0, system: '', sizes: [] };
+
+    /* ── DOM refs ── */
+    const steps     = [null, ...document.querySelectorAll('.step-panel')];
+    const wpSteps   = document.querySelectorAll('.wp-step');
+    let currentStep = 1;
+
+    /* ── Helpers ── */
+    function showStep(n) {
+      steps.slice(1).forEach(s => s.classList.remove('active'));
+      steps[n].classList.add('active');
+      wpSteps.forEach((el, i) => {
+        const idx = i + 1;
+        el.classList.toggle('active', idx === n);
+        el.classList.toggle('done',   idx < n);
+      });
+      currentStep = n;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function formatKc(n) {
+      return n.toLocaleString('cs-CZ') + ' Kč';
+    }
+
+    const roomNames = ['Místnost 1','Místnost 2','Místnost 3','Místnost 4','Místnost 5'];
+    const roomEmoji = ['🛋️','🛏️','🍳','📚','🪴'];
+
+    /* ══════════════════════════════════════
+       STEP 1 – počet místností
+    ══════════════════════════════════════ */
+    const s1next = document.getElementById('s1next');
+    document.querySelectorAll('.room-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.room-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        state.rooms = parseInt(btn.dataset.rooms);
+        s1next.disabled = false;
+      });
+    });
+    s1next.addEventListener('click', () => {
+      // Pre-select system based on room count
+      if (state.rooms === 1) preselectSystem('split');
+      else preselectSystem('multisplit');
+      showStep(2);
+    });
+
+    /* ══════════════════════════════════════
+       STEP 2 – typ systému
+    ══════════════════════════════════════ */
+    const s2next = document.getElementById('s2next');
+
+    function preselectSystem(val) {
+      document.querySelectorAll('.system-btn').forEach(b => {
+        b.classList.toggle('selected', b.dataset.system === val);
+      });
+      state.system = val;
+      s2next.disabled = false;
+    }
+
+    document.querySelectorAll('.system-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.system-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        state.system = btn.dataset.system;
+        s2next.disabled = false;
+      });
+    });
+    document.getElementById('s2back').addEventListener('click', () => showStep(1));
+    s2next.addEventListener('click', () => {
+      buildSliders();
+      showStep(3);
+    });
+
+    /* ══════════════════════════════════════
+       STEP 3 – posuvníky
+    ══════════════════════════════════════ */
+    function buildSliders() {
+      const container = document.getElementById('roomSliders');
+      container.innerHTML = '';
+      state.sizes = [];
+      for (let i = 0; i < state.rooms; i++) {
+        state.sizes[i] = 20; // default 20 m²
+        const item = document.createElement('div');
+        item.className = 'room-slider-item';
+        item.innerHTML = `
+          <div class="room-slider-item__header">
+            <span class="room-slider-item__name">${roomEmoji[i]} ${roomNames[i]}</span>
+            <span class="room-slider-item__val" id="val${i}">20 m²</span>
+          </div>
+          <input type="range" min="10" max="80" value="20" step="5" id="slider${i}" />
+          <div class="slider-labels"><span>10 m²</span><span>80 m²</span></div>
+        `;
+        container.appendChild(item);
+        const slider = item.querySelector(`#slider${i}`);
+        const valEl  = item.querySelector(`#val${i}`);
+        slider.addEventListener('input', () => {
+          state.sizes[i] = parseInt(slider.value);
+          valEl.textContent = slider.value + ' m²';
+        });
+      }
+    }
+    document.getElementById('s3back').addEventListener('click', () => showStep(2));
+    document.getElementById('s3next').addEventListener('click', () => {
+      buildResults();
+      showStep(4);
+    });
+
+    /* ══════════════════════════════════════
+       STEP 4 – výsledky
+    ══════════════════════════════════════ */
+    function calcKw(m2) { return parseFloat((m2 * 0.07).toFixed(2)); }
+
+    function kwBadge(kw) {
+      if (kw < 2.5) return `<span class="kw-badge kw-badge--low">⚠️ Slabý výkon</span>`;
+      if (kw > 7)   return `<span class="kw-badge kw-badge--high">⚠️ Vysoký výkon</span>`;
+      return `<span class="kw-badge kw-badge--ok">✅ V pořádku</span>`;
+    }
+
+    function recommendedUnit(kw) {
+      if (kw <= 2.5) return '2,5 kW (např. 9 000 BTU)';
+      if (kw <= 3.5) return '3,5 kW (např. 12 000 BTU)';
+      if (kw <= 5.0) return '5,0 kW (např. 18 000 BTU)';
+      if (kw <= 7.0) return '7,0 kW (např. 24 000 BTU)';
+      return '≥ 7,1 kW – poraďte se s technikem';
+    }
+
+    function buildResults() {
+      const cards    = document.getElementById('roomResultCards');
+      const warnings = document.getElementById('warningsContainer');
+      cards.innerHTML = '';
+      warnings.innerHTML = '';
+      let total = 0;
+      let hasLow = false, hasHigh = false;
+
+      state.sizes.forEach((m2, i) => {
+        const kw = calcKw(m2);
+        total += kw;
+        if (kw < 2.5) hasLow = true;
+        if (kw > 7)   hasHigh = true;
+
+        const card = document.createElement('div');
+        card.className = 'room-result-card';
+        card.innerHTML = `
+          <div>
+            <div class="room-result-card__name">${roomEmoji[i]} ${roomNames[i]}</div>
+            <div class="room-result-card__meta">${m2} m² → doporučujeme ${recommendedUnit(kw)}</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:4px;">
+            <span class="room-result-card__kw">${kw} kW</span>
+            ${kwBadge(kw)}
+          </div>
+        `;
+        cards.appendChild(card);
+      });
+
+      document.getElementById('totalKw').textContent = parseFloat(total.toFixed(2)) + ' kW';
+
+      if (hasLow) {
+        warnings.innerHTML += `
+          <div class="alert-box alert-box--red">
+            <span class="alert-box__icon">🔴</span>
+            <div><strong>Pozor – poddimenzování!</strong> Jeden nebo více výkonů je pod 2,5 kW.
+            Slabá jednotka nedokáže místnost dostatečně ochladit a pracuje stále na 100 %, což zkracuje její životnost.
+            Doporučujeme minimálně 2,5 kW.</div>
+          </div>`;
+      }
+      if (hasHigh) {
+        warnings.innerHTML += `
+          <div class="alert-box alert-box--orange">
+            <span class="alert-box__icon">🟠</span>
+            <div><strong>Upozornění – naddimenzování</strong> Výkon nad 7 kW je zbytečně velký pro danou plochu.
+            Příliš silná klimatizace rychle ochladí vzduch bez jeho odvlhčení, což způsobuje nepříjemný pocit vlhkého chladu.
+            Doporučujeme konzultaci.</div>
+          </div>`;
+      }
+    }
+
+    document.getElementById('s4back').addEventListener('click', () => showStep(3));
+    document.getElementById('s4next').addEventListener('click', () => {
+      buildPrice();
+      showStep(5);
+    });
+
+    /* ══════════════════════════════════════
+       STEP 5 – cena
+    ══════════════════════════════════════ */
+    const systemLabels = {
+      split:      'Split 1+1',
+      multisplit: 'Multisplit',
+      multi:      'Více samostatných split'
+    };
+
+    function buildPrice() {
+      const n = state.rooms;
+      // Base: first room 25 000, each extra +15 000
+      let base = 25000 + (n - 1) * 15000;
+      let surcharge = 0;
+      let surchargeLabel = '';
+
+      if (state.system === 'multisplit') {
+        surcharge = Math.round(base * 0.20);
+        surchargeLabel = 'Příplatek multisplit (+20 %)';
+      }
+
+      const totalNet = base + surcharge;
+      const totalVat = Math.round(totalNet * 1.21);
+
+      // breakdown
+      const breakdown = document.getElementById('priceBreakdown');
+      breakdown.innerHTML = '';
+      const rows = [
+        ['Systém', systemLabels[state.system]],
+        ['Počet místností', n + (n === 1 ? ' místnost' : n < 5 ? ' místnosti' : ' místností')],
+        ['Základní cena (1. místnost)', formatKc(25000)],
+      ];
+      if (n > 1) rows.push([`Další místnosti (${n - 1} × 15 000 Kč)`, formatKc((n - 1) * 15000)]);
+      if (surcharge) rows.push([surchargeLabel, formatKc(surcharge)]);
+      rows.push(['Mezisoučet bez DPH', formatKc(totalNet)]);
+      rows.push(['DPH 21 %', formatKc(Math.round(totalNet * 0.21))]);
+
+      rows.forEach(([label, val]) => {
+        const row = document.createElement('div');
+        row.className = 'price-row';
+        row.innerHTML = `<span>${label}</span><span class="price-row__value">${val}</span>`;
+        breakdown.appendChild(row);
+      });
+
+      document.getElementById('finalPrice').textContent = formatKc(totalVat);
+
+      // Pre-fill contact form message via URL param
+      const sizes = state.sizes.map((m2, i) => `${roomNames[i]}: ${m2} m²`).join(', ');
+      const kws   = state.sizes.map((m2, i) => `${roomNames[i]}: ${calcKw(m2)} kW`).join(', ');
+      const msg   = encodeURIComponent(
+        `Dobrý den,\n\nMám zájem o nezávaznou nabídku na klimatizaci.\n\n` +
+        `Systém: ${systemLabels[state.system]}\n` +
+        `Počet místností: ${n}\n` +
+        `Plochy: ${sizes}\n` +
+        `Doporučené výkony: ${kws}\n` +
+        `Orientační cena vč. DPH: ${formatKc(totalVat)}\n\n` +
+        `Prosím o upřesnění nabídky a termínu.`
+      );
+      document.getElementById('offerBtn').href = `index.html#kontakt?msg=${msg}`;
+    }
+
+    document.getElementById('s5back').addEventListener('click', () => showStep(4));
+    document.getElementById('restartBtn').addEventListener('click', () => {
+      document.querySelectorAll('.room-btn').forEach(b => b.classList.remove('selected'));
+      document.querySelectorAll('.system-btn').forEach(b => b.classList.remove('selected'));
+      state.rooms = 0; state.system = ''; state.sizes = [];
+      s1next.disabled = true;
+      s2next.disabled = true;
+      showStep(1);
+    });
+
+    /* ── Pass pre-filled message to contact form ── */
+    document.getElementById('offerBtn').addEventListener('click', function(e) {
+      const url = new URL(this.href, window.location.href);
+      const msg = url.searchParams.get('msg');
+      if (msg) {
+        sessionStorage.setItem('calcMessage', decodeURIComponent(msg));
+      }
+    });
+  })();
+
+  /* ── Auto-fill contact form if redirected from calculator ── */
+  window.addEventListener('DOMContentLoaded', () => {
+    const saved = sessionStorage.getItem('calcMessage');
+    const msgEl = document.getElementById('message');
+    const svcEl = document.getElementById('service');
+    if (saved && msgEl) {
+      msgEl.value = saved;
+      if (svcEl) svcEl.value = 'Montáž klimatizace';
+      sessionStorage.removeItem('calcMessage');
+      msgEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  });
+  </script>
+
+  <style>
+    /* Active nav link */
+    .nav__link--active {
+      color: var(--blue-600) !important;
+      font-weight: 700;
+    }
+  </style>
+</body>
+</html>
