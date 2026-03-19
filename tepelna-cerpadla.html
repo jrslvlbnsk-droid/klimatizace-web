@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tepelná čerpadla – průvodce, typy, úspory, dotace | Libánský Klimatizace</title>
+  <meta name="description" content="Kompletní průvodce tepelnými čerpadly. Typy vzduch-voda, země-voda, voda-voda, vzduch-vzduch. Kalkulačka úspor, COP, dotace Nová zelená úsporám 2025. Montáž Praha a Středočeský kraj." />
+  <meta name="keywords" content="tepelné čerpadlo, vzduch voda, země voda, COP, dotace tepelné čerpadlo, Nová zelená úsporám, kalkulačka tepelné čerpadlo, montáž tepelné čerpadlo Praha" />
+  <link rel="canonical" href="https://www.klimatizace-libansky.cz/tepelna-cerpadla.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="cs_CZ" />
+  <meta property="og:title" content="Tepelná čerpadla – průvodce, typy, úspory, dotace" />
+  <meta property="og:description" content="Vše o tepelných čerpadlech na jednom místě. Typy, princip, kalkulačka úspor, COP a dotace 2025." />
+  <meta property="og:site_name" content="Libánský Klimatizace" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ──────────────── HERO ──────────────── */
+    .tc-hero {
+      background: linear-gradient(135deg, #0c2340 0%, #0f3d6e 55%, #1a5a4a 100%);
+      padding: 130px 0 80px;
+      text-align: center;
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+    .tc-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(34,197,94,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .tc-hero__badge {
+      display: inline-block;
+      background: rgba(255,255,255,.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 999px;
+      padding: 6px 18px;
+      font-size: .82rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .tc-hero h1 {
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 18px;
+    }
+    .tc-hero h1 span { color: #4ade80; }
+    .tc-hero p {
+      font-size: 1.15rem;
+      opacity: .85;
+      max-width: 560px;
+      margin: 0 auto 40px;
+    }
+    .tc-hero__actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* ──────────────── ANIMATED INFOGRAPHIC ──────────────── */
+    .infographic {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+      margin-top: 60px;
+    }
+    .infographic__node {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.2);
+      backdrop-filter: blur(10px);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      text-align: center;
+      min-width: 140px;
+      animation: floatNode 3s ease-in-out infinite;
+    }
+    .infographic__node:nth-child(3) { animation-delay: .5s; }
+    .infographic__node:nth-child(5) { animation-delay: 1s; }
+    .infographic__node .icon { font-size: 2.2rem; display: block; margin-bottom: 8px; }
+    .infographic__node span { font-size: .88rem; font-weight: 600; opacity: .9; }
+    .infographic__arrow {
+      font-size: 1.8rem;
+      margin: 0 4px;
+      opacity: .7;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    .infographic__arrow:nth-child(4) { animation-delay: .3s; }
+    @keyframes floatNode {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: .4; }
+      50% { opacity: 1; }
+    }
+
+    /* ──────────────── SECTION STYLES ──────────────── */
+    .tc-section { padding: 80px 0; }
+    .tc-section--gray { background: var(--gray-50); }
+    .tc-section--green {
+      background: linear-gradient(135deg, #0c2340 0%, #0f3d2e 100%);
+      color: var(--white);
+    }
+    .tc-section--dark {
+      background: var(--gray-900);
+      color: var(--white);
+    }
+
+    .tc-section__header { text-align: center; margin-bottom: 56px; }
+    .tc-section__label {
+      display: inline-block;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--blue-600);
+      background: var(--blue-50);
+      border-radius: 999px;
+      padding: 5px 16px;
+      margin-bottom: 14px;
+    }
+    .tc-section--green .tc-section__label,
+    .tc-section--dark .tc-section__label {
+      background: rgba(74,222,128,.2);
+      color: #4ade80;
+    }
+    .tc-section__title {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 800;
+      line-height: 1.2;
+      color: var(--gray-900);
+    }
+    .tc-section--green .tc-section__title,
+    .tc-section--dark .tc-section__title { color: var(--white); }
+    .tc-section__subtitle {
+      font-size: 1.05rem;
+      color: var(--gray-500);
+      max-width: 600px;
+      margin: 14px auto 0;
+      line-height: 1.7;
+    }
+    .tc-section--green .tc-section__subtitle,
+    .tc-section--dark .tc-section__subtitle { color: rgba(255,255,255,.7); }
+
+    /* ──────────────── TYPE CARDS ──────────────── */
+    .types__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+    .type-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+      transition: all var(--transition);
+      opacity: 0;
+      transform: translateY(28px);
+      position: relative;
+      overflow: hidden;
+    }
+    .type-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+    .type-card--blue::before  { background: var(--blue-600); }
+    .type-card--green::before { background: var(--green-500); }
+    .type-card--cyan::before  { background: var(--cyan-500); }
+    .type-card--orange::before { background: var(--orange-500); }
+    .type-card.aos-animate { opacity: 1; transform: translateY(0); transition: opacity .5s ease, transform .5s ease, box-shadow var(--transition), border-color var(--transition); }
+    .type-card:hover { box-shadow: var(--shadow-lg); border-color: transparent; transform: translateY(-4px); }
+    .type-card__emoji { font-size: 2.6rem; margin-bottom: 16px; display: block; }
+    .type-card__badge {
+      display: inline-block;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      padding: 3px 12px;
+      margin-bottom: 14px;
+    }
+    .type-card--blue .type-card__badge   { background: var(--blue-50);  color: var(--blue-600); }
+    .type-card--green .type-card__badge  { background: #dcfce7; color: #16a34a; }
+    .type-card--cyan .type-card__badge   { background: #cffafe; color: #0e7490; }
+    .type-card--orange .type-card__badge { background: #fff7ed; color: #c2410c; }
+    .type-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; color: var(--gray-900); }
+    .type-card p  { font-size: .93rem; color: var(--gray-600); line-height: 1.65; margin-bottom: 18px; }
+    .type-card__price {
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--gray-500);
+      padding-top: 16px;
+      border-top: 1px solid var(--gray-100);
+    }
+    .type-card__price strong { color: var(--gray-800); }
+    .type-card__pros { margin-top: 12px; }
+    .type-card__pros li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: .88rem;
+      color: var(--gray-600);
+      margin-bottom: 6px;
+    }
+    .type-card__pros li::before {
+      content: '✓';
+      color: var(--green-500);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ──────────────── FLOW DIAGRAM ──────────────── */
+    .flow {
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .flow__step {
+      flex: 1;
+      min-width: 160px;
+      max-width: 220px;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-md);
+      padding: 28px 20px;
+      text-align: center;
+      position: relative;
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    .flow__step.aos-animate { opacity: 1; transform: translateY(0); transition: opacity .5s ease, transform .5s ease; }
+    .flow__step:nth-child(2).aos-animate { transition-delay: .1s; }
+    .flow__step:nth-child(4).aos-animate { transition-delay: .2s; }
+    .flow__step:nth-child(6).aos-animate { transition-delay: .3s; }
+    .flow__arrow {
+      display: flex;
+      align-items: center;
+      padding: 0 6px;
+      color: var(--blue-400);
+      font-size: 1.6rem;
+      flex-shrink: 0;
+    }
+    .flow__step__num {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--blue-600);
+      color: var(--white);
+      font-weight: 700;
+      font-size: .85rem;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 12px;
+    }
+    .flow__step__icon { font-size: 2rem; margin-bottom: 10px; }
+    .flow__step h4 { font-size: .95rem; font-weight: 700; color: var(--gray-800); margin-bottom: 6px; }
+    .flow__step p  { font-size: .82rem; color: var(--gray-500); line-height: 1.5; }
+    .flow__tagline {
+      text-align: center;
+      margin-top: 40px;
+      background: var(--blue-50);
+      border: 1px solid var(--blue-100);
+      border-radius: var(--radius-md);
+      padding: 18px 28px;
+      font-size: 1.05rem;
+      color: var(--blue-700);
+      font-weight: 500;
+      max-width: 540px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ──────────────── USAGE GRID ──────────────── */
+    .usage__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+    }
+    .usage__card {
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: var(--radius-md);
+      padding: 28px 20px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: background var(--transition), border-color var(--transition), transform var(--transition);
+    }
+    .usage__card:hover { background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.3); transform: translateY(-3px); }
+    .usage__card.aos-animate { opacity: 1; transform: translateY(0); transition: opacity .45s ease, transform .45s ease, background var(--transition), border-color var(--transition); }
+    .usage__card:nth-child(2).aos-animate { transition-delay: .08s; }
+    .usage__card:nth-child(3).aos-animate { transition-delay: .16s; }
+    .usage__card:nth-child(4).aos-animate { transition-delay: .24s; }
+    .usage__card:nth-child(5).aos-animate { transition-delay: .32s; }
+    .usage__card .icon { font-size: 2.8rem; display: block; margin-bottom: 12px; }
+    .usage__card h4 { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+    .usage__card p  { font-size: .83rem; color: rgba(255,255,255,.65); line-height: 1.5; }
+
+    /* ──────────────── SAVINGS CALCULATOR ──────────────── */
+    .savings-calc {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-xl);
+      padding: 48px;
+      max-width: 780px;
+      margin: 0 auto;
+      box-shadow: var(--shadow-lg);
+    }
+    .savings-calc h3 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 8px;
+    }
+    .savings-calc__desc { font-size: .93rem; color: var(--gray-500); margin-bottom: 36px; }
+    .calc-slider__label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .calc-slider__label span { font-weight: 600; color: var(--gray-700); }
+    .calc-slider__label strong { font-size: 1.4rem; color: var(--blue-600); font-weight: 700; }
+    input[type=range] {
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      appearance: none;
+      background: linear-gradient(to right, var(--blue-500) 0%, var(--blue-500) var(--pct, 40%), var(--gray-200) var(--pct, 40%), var(--gray-200) 100%);
+      outline: none;
+      cursor: pointer;
+      margin-bottom: 36px;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      appearance: none;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--blue-600);
+      box-shadow: 0 2px 8px rgba(37,99,235,.4);
+      cursor: pointer;
+      transition: transform var(--transition);
+    }
+    input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+    .savings__results {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .savings__result {
+      border-radius: var(--radius-md);
+      padding: 22px 18px;
+      text-align: center;
+    }
+    .savings__result--gas   { background: #fff7ed; border: 1px solid #fed7aa; }
+    .savings__result--elec  { background: #fefce8; border: 1px solid #fef08a; }
+    .savings__result--hp    { background: #dcfce7; border: 1px solid #bbf7d0; }
+    .savings__result .label { font-size: .78rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; opacity: .7; margin-bottom: 8px; }
+    .savings__result--gas  .label  { color: #9a3412; }
+    .savings__result--elec .label  { color: #713f12; }
+    .savings__result--hp   .label  { color: #14532d; }
+    .savings__result .amount {
+      font-size: 1.7rem;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .savings__result--gas  .amount  { color: #ea580c; }
+    .savings__result--elec .amount  { color: #ca8a04; }
+    .savings__result--hp   .amount  { color: #16a34a; }
+    .savings__result .unit  { font-size: .8rem; color: var(--gray-500); }
+    .savings__note {
+      margin-top: 20px;
+      font-size: .82rem;
+      color: var(--gray-400);
+      text-align: center;
+    }
+
+    /* ──────────────── COP SECTION ──────────────── */
+    .cop__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .cop__explain h3 { font-size: 1.3rem; font-weight: 700; color: var(--gray-900); margin-bottom: 16px; }
+    .cop__explain p  { color: var(--gray-600); line-height: 1.7; margin-bottom: 16px; }
+    .cop__bars { display: flex; flex-direction: column; gap: 20px; }
+    .cop__bar { }
+    .cop__bar__label {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 8px;
+      font-size: .9rem; font-weight: 600; color: var(--gray-700);
+    }
+    .cop__bar__track {
+      height: 12px; background: var(--gray-100); border-radius: 99px; overflow: hidden;
+    }
+    .cop__bar__fill {
+      height: 100%; border-radius: 99px;
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 1s cubic-bezier(.4,0,.2,1);
+    }
+    .cop__bar__fill--animate { transform: scaleX(1); }
+    .cop__bar--standard .cop__bar__fill  { background: var(--gray-400); width: 20%; }
+    .cop__bar--good     .cop__bar__fill  { background: var(--blue-500); width: 50%; }
+    .cop__bar--great    .cop__bar__fill  { background: var(--green-500); width: 75%; }
+    .cop__bar--best     .cop__bar__fill  { background: #f59e0b; width: 100%; }
+    .cop__tag {
+      display: inline-block; border-radius: 999px; padding: 3px 12px;
+      font-size: .75rem; font-weight: 700; letter-spacing: .04em;
+    }
+    .cop__tag--gray   { background: var(--gray-100); color: var(--gray-500); }
+    .cop__tag--blue   { background: var(--blue-50); color: var(--blue-600); }
+    .cop__tag--green  { background: #dcfce7; color: #16a34a; }
+    .cop__tag--amber  { background: #fef3c7; color: #d97706; }
+
+    /* ──────────────── DOTACE ──────────────── */
+    .dotace__card {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: var(--radius-xl);
+      padding: 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .dotace__left h3 { font-size: 1.6rem; font-weight: 800; color: var(--white); margin-bottom: 16px; }
+    .dotace__left p  { color: rgba(255,255,255,.75); line-height: 1.7; margin-bottom: 24px; }
+    .dotace__items { display: flex; flex-direction: column; gap: 12px; }
+    .dotace__item {
+      display: flex; align-items: flex-start; gap: 12px;
+      background: rgba(255,255,255,.07);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+    }
+    .dotace__item .icon { font-size: 1.4rem; flex-shrink: 0; }
+    .dotace__item div { }
+    .dotace__item h4 { font-size: .9rem; font-weight: 700; color: var(--white); margin-bottom: 2px; }
+    .dotace__item p  { font-size: .82rem; color: rgba(255,255,255,.65); margin: 0; }
+    .dotace__cta { text-align: center; }
+    .dotace__cta .amount {
+      font-size: 4.5rem;
+      font-weight: 800;
+      color: #4ade80;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .dotace__cta .sublabel { font-size: 1rem; color: rgba(255,255,255,.7); margin-bottom: 32px; }
+    .btn--green {
+      background: #16a34a;
+      color: var(--white);
+      box-shadow: 0 4px 20px rgba(22,163,74,.4);
+    }
+    .btn--green:hover {
+      background: #15803d;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 28px rgba(22,163,74,.5);
+    }
+
+    /* ──────────────── FAQ ──────────────── */
+    .faq { max-width: 740px; margin: 0 auto; }
+    .faq__item {
+      border-bottom: 1px solid var(--gray-200);
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    .faq__item.aos-animate { opacity: 1; transform: translateY(0); transition: opacity .4s ease, transform .4s ease; }
+    .faq__item:nth-child(2).aos-animate { transition-delay: .06s; }
+    .faq__item:nth-child(3).aos-animate { transition-delay: .12s; }
+    .faq__item:nth-child(4).aos-animate { transition-delay: .18s; }
+    .faq__item:nth-child(5).aos-animate { transition-delay: .24s; }
+    .faq__item:nth-child(6).aos-animate { transition-delay: .30s; }
+    .faq__item:nth-child(7).aos-animate { transition-delay: .36s; }
+    .faq__item:nth-child(8).aos-animate { transition-delay: .42s; }
+    .faq__btn {
+      width: 100%;
+      text-align: left;
+      padding: 22px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--gray-800);
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: inherit;
+      transition: color var(--transition);
+    }
+    .faq__btn:hover { color: var(--blue-600); }
+    .faq__btn .faq__icon {
+      flex-shrink: 0;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--gray-100);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .85rem;
+      transition: background var(--transition), transform var(--transition);
+    }
+    .faq__btn[aria-expanded=true] .faq__icon {
+      background: var(--blue-600);
+      color: var(--white);
+      transform: rotate(180deg);
+    }
+    .faq__answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .35s cubic-bezier(.4,0,.2,1), padding .25s;
+      padding: 0 8px;
+    }
+    .faq__answer.open { max-height: 400px; padding-bottom: 20px; }
+    .faq__answer p { font-size: .95rem; color: var(--gray-600); line-height: 1.7; }
+    .faq__answer .faq__highlight {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #dcfce7; color: #15803d;
+      font-weight: 700; border-radius: 999px;
+      padding: 3px 14px; font-size: .85rem; margin-bottom: 8px;
+    }
+
+    /* ──────────────── CTA STRIP ──────────────── */
+    .cta-strip {
+      background: linear-gradient(135deg, var(--blue-700) 0%, #0f3d6e 100%);
+      padding: 80px 0;
+      text-align: center;
+      color: var(--white);
+    }
+    .cta-strip h2 { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; margin-bottom: 12px; }
+    .cta-strip p  { font-size: 1.05rem; opacity: .8; max-width: 500px; margin: 0 auto 36px; }
+    .cta-strip__actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* ──────────────── RESPONSIVE ──────────────── */
+    @media (max-width: 768px) {
+      .savings__results { grid-template-columns: 1fr; }
+      .cop__grid { grid-template-columns: 1fr; }
+      .dotace__card { grid-template-columns: 1fr; }
+      .savings-calc { padding: 28px 20px; }
+      .flow { flex-direction: column; align-items: center; }
+      .flow__arrow { transform: rotate(90deg); }
+      .infographic { gap: 8px; }
+      .infographic__arrow { transform: rotate(0deg); }
+      .tc-hero { padding: 110px 0 60px; }
+    }
+    @media (max-width: 480px) {
+      .infographic { flex-direction: column; }
+      .infographic__arrow { transform: rotate(90deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a href="index.html#hero" class="nav__logo">
+        <span class="nav__logo-icon">❄</span>
+        <span>Libánský <span class="nav__logo-sub">Klimatizace</span></span>
+      </a>
+      <ul class="nav__list" id="navList">
+        <li><a href="index.html#sluzby" class="nav__link">Služby</a></li>
+        <li><a href="index.html#proc-my" class="nav__link">Proč my?</a></li>
+        <li><a href="index.html#cenik" class="nav__link">Ceník</a></li>
+        <li><a href="kalkulator.html" class="nav__link">Kalkulačka 🧮</a></li>
+        <li><a href="tepelna-cerpadla.html" class="nav__link nav__link--active">Tepelná čerpadla 🌡️</a></li>
+        <li><a href="index.html#kontakt" class="nav__link nav__link--cta">Kontakt</a></li>
+      </ul>
+      <button class="nav__hamburger" id="hamburger" aria-label="Otevřít menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <section class="tc-hero">
+    <div class="container">
+      <div class="tc-hero__badge">📚 Průvodce tepelnými čerpadly</div>
+      <h1>Tepelná čerpadla<br /><span>chytře a jednoduše</span></h1>
+      <p>Vše, co potřebujete vědět – princip, typy, úspory, dotace. Bez zbytečného žargonu.</p>
+      <div class="tc-hero__actions">
+        <a href="#typy" class="btn btn--primary">Prozkoumat typy</a>
+        <a href="#kalkulator" class="btn btn--outline">Kalkulačka úspor</a>
+      </div>
+
+      <!-- Animated infographic -->
+      <div class="infographic">
+        <div class="infographic__node">
+          <span class="icon">🌬️</span>
+          <span>Venkovní vzduch<br />–20 °C až +35 °C</span>
+        </div>
+        <div class="infographic__arrow">→</div>
+        <div class="infographic__node">
+          <span class="icon">⚙️</span>
+          <span>Tepelné<br />čerpadlo</span>
+        </div>
+        <div class="infographic__arrow">→</div>
+        <div class="infographic__node">
+          <span class="icon">🏠</span>
+          <span>Vaše vytápěný<br />dům</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ ÚVOD ═══════════════ -->
+  <section class="tc-section" id="uvod">
+    <div class="container">
+      <div class="tc-section__header">
+        <span class="tc-section__label">Jak to funguje</span>
+        <h2 class="tc-section__title">Co je tepelné čerpadlo?</h2>
+        <p class="tc-section__subtitle">Tepelné čerpadlo teplo <strong>nepřevyrábí</strong> — pouze ho <strong>přesouvá</strong> z&nbsp;jednoho místa na druhé. Přesně jako lednička, jen naopak.</p>
+      </div>
+
+      <div class="flow">
+        <div class="flow__step" data-aos>
+          <div class="flow__step__icon">🌡️</div>
+          <div class="flow__step__num">1</div>
+          <h4>Výparník</h4>
+          <p>Chladivo absorbuje teplo z&nbsp;okolního vzduchu, země nebo vody – i při záporných teplotách.</p>
+        </div>
+        <div class="flow__arrow">→</div>
+        <div class="flow__step" data-aos>
+          <div class="flow__step__icon">🔧</div>
+          <div class="flow__step__num">2</div>
+          <h4>Kompresor</h4>
+          <p>Stlačí chladivo, čímž výrazně zvýší jeho teplotu. Tady vstupuje elektřina – ale jen malé množství.</p>
+        </div>
+        <div class="flow__arrow">→</div>
+        <div class="flow__step" data-aos>
+          <div class="flow__step__icon">♨️</div>
+          <div class="flow__step__num">3</div>
+          <h4>Kondenzátor</h4>
+          <p>Předá teplo do topného systému – podlahové topení, radiátory nebo ohřev vody.</p>
+        </div>
+        <div class="flow__arrow">→</div>
+        <div class="flow__step" data-aos>
+          <div class="flow__step__icon">🔄</div>
+          <div class="flow__step__num">4</div>
+          <h4>Expanzní ventil</h4>
+          <p>Chladivo se ochladí a celý cyklus začíná znovu. Neustálý oběh, bez emisí.</p>
+        </div>
+      </div>
+
+      <div class="flow__tagline">
+        💡 Jednoduše řečeno: <strong>funguje jako lednička naopak</strong> – místo chlazení vnitřku vytápí váš dům.
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ TYPY ═══════════════ -->
+  <section class="tc-section tc-section--gray" id="typy">
+    <div class="container">
+      <div class="tc-section__header">
+        <span class="tc-section__label">Výběr systému</span>
+        <h2 class="tc-section__title">4 typy tepelných čerpadel</h2>
+        <p class="tc-section__subtitle">Každý typ má své výhody. Správnou volbu vždy konzultujte s&nbsp;odborníkem, který zohlední podmínky vaší nemovitosti.</p>
+      </div>
+
+      <div class="types__grid">
+
+        <div class="type-card type-card--blue" data-aos>
+          <span class="type-card__emoji">🌬️</span>
+          <span class="type-card__badge">Nejpopulárnější</span>
+          <h3>Vzduch – voda</h3>
+          <p>Čerpá teplo z&nbsp;venkovního vzduchu a předává ho do topného systému (podlahové topení, radiátory) nebo ohřívá TUV. Nejsnazší instalace, žádné vrty ani kolektory.</p>
+          <ul class="type-card__pros">
+            <li>Instalace 1–2 dny, bez stavebních zásahů</li>
+            <li>Dotace až 50 % z Nové zelené úsporám</li>
+            <li>Vhodné i pro starší domy</li>
+          </ul>
+          <div class="type-card__price">Cena systému od <strong>150 000 Kč</strong> vč. montáže</div>
+        </div>
+
+        <div class="type-card type-card--green" data-aos>
+          <span class="type-card__emoji">🌍</span>
+          <span class="type-card__badge">Nejefektivnější</span>
+          <h3>Země – voda</h3>
+          <p>Využívá geotermální teplo uložené v&nbsp;zemi – pomocí vrtů (do 100–150 m) nebo horizontálních kolektorů (plocha 2–3× zastavěná plocha domu).</p>
+          <ul class="type-card__pros">
+            <li>Stabilní výkon i v mrazivé zimě</li>
+            <li>Nejdelší životnost systému (25+ let)</li>
+            <li>COP 4–5 i v extrémních podmínkách</li>
+          </ul>
+          <div class="type-card__price">Cena systému od <strong>350 000 Kč</strong> vč. vrtů</div>
+        </div>
+
+        <div class="type-card type-card--cyan" data-aos>
+          <span class="type-card__emoji">💧</span>
+          <span class="type-card__badge">Nejvyšší COP</span>
+          <h3>Voda – voda</h3>
+          <p>Čerpá teplo z&nbsp;podzemní vody (studna). Podzemní voda má celoročně stabilní teplotu 8–12 °C, čímž dosahuje nejvyšší účinnosti ze všech typů.</p>
+          <ul class="type-card__pros">
+            <li>COP až 6–7 – nejnižší provozní náklady</li>
+            <li>Nezávislost na venkovní teplotě</li>
+            <li>Vyžaduje vhodné hydrogeologické podmínky</li>
+          </ul>
+          <div class="type-card__price">Cena systému od <strong>280 000 Kč</strong> vč. studny</div>
+        </div>
+
+        <div class="type-card type-card--orange" data-aos>
+          <span class="type-card__emoji">🌬️❄️</span>
+          <span class="type-card__badge">Multifunkční</span>
+          <h3>Vzduch – vzduch</h3>
+          <p>Kombinace tepelného čerpadla a klimatizace v&nbsp;jednom. V zimě vytápí, v létě chladí. Ideální pro domy bez ústředního topení nebo jako doplněk k&nbsp;existujícímu systému.</p>
+          <ul class="type-card__pros">
+            <li>Vytápění i chlazení jedním systémem</li>
+            <li>Nejnižší pořizovací cena</li>
+            <li>Snadná a rychlá montáž</li>
+          </ul>
+          <div class="type-card__price">Cena systému od <strong>80 000 Kč</strong> vč. montáže</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ POUŽITÍ ═══════════════ -->
+  <section class="tc-section tc-section--green" id="pouziti">
+    <div class="container">
+      <div class="tc-section__header">
+        <span class="tc-section__label">Uplatnění</span>
+        <h2 class="tc-section__title">Co vše lze vytápět</h2>
+        <p class="tc-section__subtitle">Tepelné čerpadlo zvládne mnohem více než jen vytápění místností.</p>
+      </div>
+
+      <div class="usage__grid">
+        <div class="usage__card" data-aos>
+          <span class="icon">🏠</span>
+          <h4>Rodinný dům</h4>
+          <p>Podlahové topení, radiátory nebo fan-coily. Ideální pro novostavby i rekonstrukce.</p>
+        </div>
+        <div class="usage__card" data-aos>
+          <span class="icon">🏢</span>
+          <h4>Komerční objekt</h4>
+          <p>Kanceláře, prodejny, provozovny. Nižší provozní náklady, zelená image firmy.</p>
+        </div>
+        <div class="usage__card" data-aos>
+          <span class="icon">🏊</span>
+          <h4>Bazén</h4>
+          <p>Ohřev bazénové vody – prodloužení sezóny o 2–3 měsíce za zlomek ceny elektrického ohřevu.</p>
+        </div>
+        <div class="usage__card" data-aos>
+          <span class="icon">💧</span>
+          <h4>Teplá užitková voda</h4>
+          <p>Ohřev TUV po celý rok. Moderní TČ ohřejí vodu i při teplotách pod –10 °C.</p>
+        </div>
+        <div class="usage__card" data-aos>
+          <span class="icon">❄️</span>
+          <h4>Chlazení v létě</h4>
+          <p>Reverzní provoz – v horkých dnech systém otočí směr a funguje jako klimatizace.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ KALKULAČKA ═══════════════ -->
+  <section class="tc-section" id="kalkulator">
+    <div class="container">
+      <div class="tc-section__header">
+        <span class="tc-section__label">Kalkulačka</span>
+        <h2 class="tc-section__title">Porovnání nákladů na vytápění</h2>
+        <p class="tc-section__subtitle">Pohybujte posuvníkem a sledujte orientační roční náklady pro různé způsoby vytápění.</p>
+      </div>
+
+      <div class="savings-calc" data-aos>
+        <h3>💰 Kolik ušetříte?</h3>
+        <p class="savings-calc__desc">Orientační výpočet při průměrné spotřebě 60 kWh/m² ročně, plyn 1,8 Kč/kWh, elektřina 5,5 Kč/kWh, TČ COP 3,5.</p>
+
+        <div class="calc-slider__label">
+          <span>Plocha domu</span>
+          <strong id="areaVal">120 m²</strong>
+        </div>
+        <input type="range" id="areaSlider" min="40" max="400" value="120" step="10" />
+
+        <div class="savings__results">
+          <div class="savings__result savings__result--gas">
+            <div class="label">🔥 Plyn</div>
+            <div class="amount" id="gasAmt">12 960</div>
+            <div class="unit">Kč / rok</div>
+          </div>
+          <div class="savings__result savings__result--elec">
+            <div class="label">⚡ Elektřina (přímotop)</div>
+            <div class="amount" id="elecAmt">39 600</div>
+            <div class="unit">Kč / rok</div>
+          </div>
+          <div class="savings__result savings__result--hp">
+            <div class="label">🌱 Tepelné čerpadlo</div>
+            <div class="amount" id="hpAmt">11 314</div>
+            <div class="unit">Kč / rok</div>
+          </div>
+        </div>
+
+        <p class="savings__note">* Orientační výpočet. Skutečné náklady závisí na izolaci domu, lokalitě, aktuálních cenách energií a nastaveném systému.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ COP ═══════════════ -->
+  <section class="tc-section tc-section--gray" id="cop">
+    <div class="container">
+      <div class="tc-section__header">
+        <span class="tc-section__label">Efektivita</span>
+        <h2 class="tc-section__title">Co je COP?</h2>
+        <p class="tc-section__subtitle">Coefficient of Performance – číslo, které říká, kolik tepla dostanete za každý kilowatt elektřiny.</p>
+      </div>
+
+      <div class="cop__grid">
+        <div class="cop__explain">
+          <h3>Jak číst hodnotu COP</h3>
+          <p><strong>COP 3</strong> znamená: za <strong>1 kW elektřiny</strong> získáte <strong>3 kW tepla</strong>. Dvě třetiny energie jsou „zdarma" z přírody.</p>
+          <p>Klasický elektrický přímotop má COP&nbsp;1 – celá spotřeba je ze zásuvky. Proto je tepelné čerpadlo 3–5× levnější v provozu.</p>
+          <p>Hodnota COP se mění se sezonní teplotou – proto výrobci uvádějí také <strong>SCOP</strong> (sezonní COP), který lépe odráží reálný provoz za celý rok.</p>
+        </div>
+
+        <div class="cop__bars" id="copBars">
+          <div class="cop__bar cop__bar--standard">
+            <div class="cop__bar__label">
+              <span>⚡ Přímotop</span>
+              <span class="cop__tag cop__tag--gray">COP 1,0</span>
+            </div>
+            <div class="cop__bar__track"><div class="cop__bar__fill"></div></div>
+          </div>
+          <div class="cop__bar cop__bar--good">
+            <div class="cop__bar__label">
+              <span>🌬️ TČ vzduch–voda (zima)</span>
+              <span class="cop__tag cop__tag--blue">COP 2,5</span>
+            </div>
+            <div class="cop__bar__track"><div class="cop__bar__fill"></div></div>
+          </div>
+          <div class="cop__bar cop__bar--great">
+            <div class="cop__bar__label">
+              <span>🌍 TČ vzduch–voda (jaro/podzim)</span>
+              <span class="cop__tag cop__tag--green">COP 3,8</span>
+            </div>
+            <div class="cop__bar__track"><div class="cop__bar__fill"></div></div>
+          </div>
+          <div class="cop__bar cop__bar--best">
+            <div class="cop__bar__label">
+              <span>💧 TČ voda–voda</span>
+              <span class="cop__tag cop__tag--amber">COP 5,5</span>
+            </div>
+            <div class="cop__bar__track"><div class="cop__bar__fill"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ DOTACE ═══════════════ -->
+  <section class="tc-section tc-section--dark" id="dotace">
+    <div class="container">
+      <div class="tc-section__header">
+        <span class="tc-section__label">Dotace 2025</span>
+        <h2 class="tc-section__title">Nová zelená úsporám</h2>
+        <p class="tc-section__subtitle">Stát podporuje přechod na obnovitelné zdroje. Dotace pokrývají významnou část pořizovacích nákladů.</p>
+      </div>
+
+      <div class="dotace__card" data-aos>
+        <div class="dotace__left">
+          <h3>Na co lze čerpat dotaci?</h3>
+          <p>Program Nová zelená úsporám (NZÚ) podporuje instalaci tepelných čerpadel jako náhradu za fosilní paliva. Žádost podáváte přes SFŽP před zahájením stavebních prací.</p>
+          <div class="dotace__items">
+            <div class="dotace__item">
+              <span class="icon">🌬️</span>
+              <div>
+                <h4>TČ vzduch–voda jako zdroj pro vytápění</h4>
+                <p>Dotace až 100 000 Kč při splnění podmínek A.3</p>
+              </div>
+            </div>
+            <div class="dotace__item">
+              <span class="icon">🌍</span>
+              <div>
+                <h4>TČ země–voda nebo voda–voda</h4>
+                <p>Dotace až 150 000 Kč – vyšší příspěvek pro efektivnější systémy</p>
+              </div>
+            </div>
+            <div class="dotace__item">
+              <span class="icon">💧</span>
+              <div>
+                <h4>Ohřev TUV tepelným čerpadlem</h4>
+                <p>Samostatný ohřívač vody s TČ – dotace až 35 000 Kč</p>
+              </div>
+            </div>
+            <div class="dotace__item">
+              <span class="icon">📋</span>
+              <div>
+                <h4>Poradenství a projekty</h4>
+                <p>Příspěvek na projektovou dokumentaci a energetický audit</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="dotace__cta">
+          <div class="amount">50%</div>
+          <div class="sublabel">až z celkových<br />uznatelných nákladů</div>
+          <a href="index.html#kontakt" class="btn btn--green">
+            Chci poradit s dotací
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ FAQ ═══════════════ -->
+  <section class="tc-section" id="faq">
+    <div class="container">
+      <div class="tc-section__header">
+        <span class="tc-section__label">Časté otázky</span>
+        <h2 class="tc-section__title">Máte otázky? Máme odpovědi.</h2>
+      </div>
+
+      <div class="faq">
+
+        <div class="faq__item" data-aos>
+          <button class="faq__btn" aria-expanded="false">
+            <span>Funguje tepelné čerpadlo při –20 °C?</span>
+            <span class="faq__icon">▼</span>
+          </button>
+          <div class="faq__answer">
+            <p><span class="faq__highlight">✓ ANO – moderní čerpadla fungují</span> Dnešní tepelná čerpadla vzduch–voda jsou konstruována pro teploty až –25 °C. Při velmi nízkých teplotách klesá COP (na cca 1,5–2), ale čerpadlo stále vytápí. Moderní modely Mitsubishi, Daikin nebo Vaillant mají tzv. Flash injection kompresor, který udržuje výkon i při –20 °C.</p>
+          </div>
+        </div>
+
+        <div class="faq__item" data-aos>
+          <button class="faq__btn" aria-expanded="false">
+            <span>Jak hlučné je tepelné čerpadlo?</span>
+            <span class="faq__icon">▼</span>
+          </button>
+          <div class="faq__answer">
+            <p><span class="faq__highlight">🔇 Pod 40 dB = tichý provoz</span> Moderní tepelná čerpadla vydávají 40–55 dB ve vzdálenosti 1 m. Pro srovnání: lidský hovor je cca 60 dB, lednice v kuchyni 35–45 dB. Správné umístění venkovní jednotky (s odstupem od sousedů a oken) je klíčové. Interiérové jednotky jsou ještě tišší.</p>
+          </div>
+        </div>
+
+        <div class="faq__item" data-aos>
+          <button class="faq__btn" aria-expanded="false">
+            <span>Jak dlouho trvá instalace?</span>
+            <span class="faq__icon">▼</span>
+          </button>
+          <div class="faq__answer">
+            <p><span class="faq__highlight">📅 2–3 dny standardně</span> Montáž tepelného čerpadla vzduch–voda trvá zpravidla 2–3 pracovní dny – včetně hydraulického zapojení do topné soustavy a zprovoznění regulace. U systémů se zemními vrty je nutno počítat s vrtacími pracemi (1–2 dny navíc). Vše připravíme tak, aby byl výpadek topení co nejkratší.</p>
+          </div>
+        </div>
+
+        <div class="faq__item" data-aos>
+          <button class="faq__btn" aria-expanded="false">
+            <span>Jaká je životnost tepelného čerpadla?</span>
+            <span class="faq__icon">▼</span>
+          </button>
+          <div class="faq__answer">
+            <p><span class="faq__highlight">⏳ 20+ let při pravidelném servisu</span> Kvalitní tepelné čerpadlo má při pravidelné roční údržbě životnost 20–25 let. Kompresor je nejcennější součástí – dobré modely mají záruky kompresoru 5–7 let. Zemní kolektory a vrty mají životnost 50+ let. Doporučujeme roční servisní kontrolu.</p>
+          </div>
+        </div>
+
+        <div class="faq__item" data-aos>
+          <button class="faq__btn" aria-expanded="false">
+            <span>Hodí se tepelné čerpadlo do staršího domu?</span>
+            <span class="faq__icon">▼</span>
+          </button>
+          <div class="faq__answer">
+            <p>Záleží na stavu izolace a topného systému. Starší domy s radiátory dimenzovanými na 70/90 °C nejsou ideální – TČ pracuje nejlépe s nízkoteplotním topením (35–55 °C). Výměna radiátorů za větší nebo instalace podlahového topení zvýší efektivitu. Vždy provedeme energetický výpočet, abyste věděli, co očekávat.</p>
+          </div>
+        </div>
+
+        <div class="faq__item" data-aos>
+          <button class="faq__btn" aria-expanded="false">
+            <span>Potřebuji stavební povolení?</span>
+            <span class="faq__icon">▼</span>
+          </button>
+          <div class="faq__answer">
+            <p>Instalace tepelného čerpadla vzduch–voda zpravidla nevyžaduje stavební povolení – stačí ohlášení stavby nebo pouze splnění obecních vyhlášek o hluku. U zemních vrtů je nutno ohlásit vrt na Vodoprávním úřadu a mít hydrogeologický posudek. Všechny administrativní náležitosti vám pomůžeme vyřídit.</p>
+          </div>
+        </div>
+
+        <div class="faq__item" data-aos>
+          <button class="faq__btn" aria-expanded="false">
+            <span>Potřebuji speciální tarif elektřiny?</span>
+            <span class="faq__icon">▼</span>
+          </button>
+          <div class="faq__answer">
+            <p><span class="faq__highlight">💡 Doporučujeme D57d nebo D56d</span> Ano, pro tepelné čerpadlo je výhodné zažádat distributora o přepnutí na tzv. HDO tarif (D57d nebo D56d), který nabízí nižší cenu elektřiny po dobu 22 hodin denně. Tyto tarify jsou speciálně určeny pro tepelná čerpadla a mohou ušetřit 15–25 % nákladů na elektřinu.</p>
+          </div>
+        </div>
+
+        <div class="faq__item" data-aos>
+          <button class="faq__btn" aria-expanded="false">
+            <span>Lze kombinovat s fotovoltaikou?</span>
+            <span class="faq__icon">▼</span>
+          </button>
+          <div class="faq__answer">
+            <p><span class="faq__highlight">⚡ Ideální kombinace</span> Tepelné čerpadlo + fotovoltaika je zlatá kombinace. FV panely vyrábí elektřinu ve dne, kdy je tepelné čerpadlo nejvýkonnější (jarní a podzimní sluneční dny). Inteligentní regulace nabíjí zásobník TUV a ohřívá dům ve chvíli, kdy je elektřina z FV levná nebo zdarma.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ CTA ═══════════════ -->
+  <section class="cta-strip" id="konzultace">
+    <div class="container">
+      <h2>Chcete tepelné čerpadlo? Poradíme zdarma.</h2>
+      <p>Vybereme správný typ, spočítáme úspory, pomůžeme s dotací. Bez závazků.</p>
+      <div class="cta-strip__actions">
+        <a href="index.html#kontakt" class="btn btn--primary">
+          Chci konzultaci zdarma
+        </a>
+        <a href="tel:+420777000000" class="btn btn--outline">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.25h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.81A16 16 0 0 0 15.2 16.1l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          +420 777 000 000
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer__content">
+      <div class="footer__brand">
+        <a href="index.html#hero" class="nav__logo">
+          <span class="nav__logo-icon">❄</span>
+          <span>Libánský <span class="nav__logo-sub">Klimatizace</span></span>
+        </a>
+        <p>Profesionální montáž a servis klimatizací a tepelných čerpadel v&nbsp;Praze a&nbsp;okrese Mělník.</p>
+      </div>
+      <div class="footer__links">
+        <h4>Průvodce</h4>
+        <ul>
+          <li><a href="#uvod">Jak funguje TČ</a></li>
+          <li><a href="#typy">Typy čerpadel</a></li>
+          <li><a href="#kalkulator">Kalkulačka úspor</a></li>
+          <li><a href="#cop">COP – efektivita</a></li>
+          <li><a href="#dotace">Dotace 2025</a></li>
+        </ul>
+      </div>
+      <div class="footer__links">
+        <h4>Kontakt</h4>
+        <ul>
+          <li><a href="tel:+420777000000">+420 777 000 000</a></li>
+          <li><a href="mailto:info@klimatizace-libansky.cz">info@klimatizace-libansky.cz</a></li>
+          <li>Praha &amp; okres Mělník</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <p>© 2025 Jaroslav Libánský – Klimatizace &amp; Tepelná čerpadla. Všechna práva vyhrazena.</p>
+        <p>IČO: XXXXXXXX &nbsp;|&nbsp; Plátce DPH</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ── Navigation ── */
+    const header    = document.getElementById('header');
+    const hamburger = document.getElementById('hamburger');
+    const navList   = document.getElementById('navList');
+
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    hamburger.addEventListener('click', () => {
+      const open = navList.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', open);
+      hamburger.classList.toggle('is-open', open);
+    });
+
+    navList.querySelectorAll('.nav__link').forEach(link => {
+      link.addEventListener('click', () => {
+        navList.classList.remove('open');
+        hamburger.classList.remove('is-open');
+      });
+    });
+
+    /* ── Scroll animations ── */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('aos-animate');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('[data-aos]').forEach(el => observer.observe(el));
+
+    /* ── COP bars animation ── */
+    const copObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('.cop__bar__fill').forEach((fill, i) => {
+            setTimeout(() => fill.classList.add('cop__bar__fill--animate'), i * 120);
+          });
+          copObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    const copBars = document.getElementById('copBars');
+    if (copBars) copObserver.observe(copBars);
+
+    /* ── Savings calculator ── */
+    const slider   = document.getElementById('areaSlider');
+    const areaVal  = document.getElementById('areaVal');
+    const gasAmt   = document.getElementById('gasAmt');
+    const elecAmt  = document.getElementById('elecAmt');
+    const hpAmt    = document.getElementById('hpAmt');
+
+    function formatNum(n) {
+      return Math.round(n).toLocaleString('cs-CZ');
+    }
+
+    function updateCalc() {
+      const area = parseInt(slider.value);
+      const pct  = ((area - slider.min) / (slider.max - slider.min)) * 100;
+      slider.style.setProperty('--pct', pct + '%');
+      areaVal.textContent = area + ' m²';
+
+      const consumption = area * 60; // kWh/year
+      const gas  = consumption * 1.8;
+      const elec = consumption * 5.5;
+      const hp   = (consumption / 3.5) * 5.5;
+
+      gasAmt.textContent  = formatNum(gas);
+      elecAmt.textContent = formatNum(elec);
+      hpAmt.textContent   = formatNum(hp);
+    }
+
+    slider.addEventListener('input', updateCalc);
+    updateCalc();
+
+    /* ── FAQ accordion ── */
+    document.querySelectorAll('.faq__btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const answer  = btn.nextElementSibling;
+        const isOpen  = btn.getAttribute('aria-expanded') === 'true';
+
+        // Close all
+        document.querySelectorAll('.faq__btn').forEach(b => {
+          b.setAttribute('aria-expanded', 'false');
+          b.nextElementSibling.classList.remove('open');
+        });
+
+        // Open clicked if it was closed
+        if (!isOpen) {
+          btn.setAttribute('aria-expanded', 'true');
+          answer.classList.add('open');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
