@@ -353,35 +353,43 @@
           </div>
         </div>
         
-        <form class="contact__form" action="https://formspree.io/f/xdkozybg" method="POST">
-          <div class="form-group">
-            <label for="name">Jméno a příjmení *</label>
-            <input type="text" id="name" name="name" required>
+        <form class="contact__form" id="contactForm" action="https://formspree.io/f/xdkozybg" method="POST">
+          <!-- Potvrzovací zpráva -->
+          <div id="formSuccess" class="form-success" style="display: none;">
+            <div class="success-icon">✅</div>
+            <h3>Děkujeme za vaši poptávku!</h3>
+            <p>Vaše zpráva byla úspěšně odeslána. Ozveme se vám co nejdříve.</p>
           </div>
           
-          <div class="form-group">
-            <label for="phone">Telefon *</label>
-            <input type="tel" id="phone" name="phone" required>
+          <div id="formFields">
+            <div class="form-group">
+              <label for="name">Jméno a příjmení *</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="phone">Telefon *</label>
+              <input type="tel" id="phone" name="phone" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" name="_replyto">
+            </div>
+            
+            <div class="form-group">
+              <label for="message">Zpráva *</label>
+              <textarea id="message" name="message" rows="5" placeholder="Popište, co potřebujete..." required></textarea>
+            </div>
+            
+            <!-- Skrytá pole pro Formspree -->
+            <input type="hidden" name="_subject" value="Nová poptávka z webu AlgorTerma">
+            <input type="hidden" name="_language" value="cs">
+            
+            <button type="submit" class="btn btn--primary btn--full" id="submitBtn">Odeslat poptávku</button>
+            
+            <p class="form-note">* Povinné údaje. Vaše data budou použita pouze pro účely této poptávky.</p>
           </div>
-          
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" name="_replyto">
-          </div>
-          
-          <div class="form-group">
-            <label for="message">Zpráva *</label>
-            <textarea id="message" name="message" rows="5" placeholder="Popište, co potřebujete..." required></textarea>
-          </div>
-          
-          <!-- Skrytá pole pro Formspree -->
-          <input type="hidden" name="_subject" value="Nová poptávka z webu AlgorTerma">
-          <input type="hidden" name="_next" value="https://algorterma.cz/#kontakt">
-          <input type="hidden" name="_language" value="cs">
-          
-          <button type="submit" class="btn btn--primary btn--full">Odeslat poptávku</button>
-          
-          <p class="form-note">* Povinné údaje. Vaše data budou použita pouze pro účely této poptávky.</p>
         </form>
       </div>
     </div>
@@ -436,5 +444,50 @@
   </footer>
 
   <script src="./script.js"></script>
+  <script>
+    // Formulář handling
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const form = this;
+      const submitBtn = document.getElementById('submitBtn');
+      const formFields = document.getElementById('formFields');
+      const formSuccess = document.getElementById('formSuccess');
+      
+      // Změň text tlačítka
+      submitBtn.textContent = 'Odesílám...';
+      submitBtn.disabled = true;
+      
+      // Odešli formulář
+      fetch(form.action, {
+        method: form.method,
+        body: new FormData(form),
+        headers: {
+          'Accept': 'application/json'
+        }
+      }).then(response => {
+        if (response.ok) {
+          // Úspěch - zobraz potvrzení
+          formFields.style.display = 'none';
+          formSuccess.style.display = 'block';
+          
+          // Po 5 sekundách obnovit formulář
+          setTimeout(() => {
+            formFields.style.display = 'block';
+            formSuccess.style.display = 'none';
+            form.reset();
+            submitBtn.textContent = 'Odeslat poptávku';
+            submitBtn.disabled = false;
+          }, 5000);
+        } else {
+          throw new Error('Chyba při odesílání');
+        }
+      }).catch(error => {
+        alert('Došlo k chybě při odesílání formuláře. Zkuste to prosím znovu nebo nás kontaktujte telefonicky.');
+        submitBtn.textContent = 'Odeslat poptávku';
+        submitBtn.disabled = false;
+      });
+    });
+  </script>
 </body>
 </html>
