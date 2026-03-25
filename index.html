@@ -377,7 +377,7 @@
               
               <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" name="_replyto">
+                <input type="email" id="email" name="_replyto">
               </div>
               
               <div class="form-group">
@@ -388,6 +388,8 @@
               <!-- Skrytá pole pro Formspree -->
               <input type="hidden" name="_subject" value="Nová poptávka z webu AlgorTerma">
               <input type="hidden" name="_language" value="cs">
+              <!-- Honeypot ochrana proti spamu -->
+              <input type="text" name="_gotcha" style="display:none" />
               
               <button type="submit" class="btn btn--primary btn--full" id="submitBtn">Odeslat poptávku</button>
               
@@ -449,7 +451,7 @@
 
   <script src="./script.js"></script>
   <script>
-    // Formulář handling
+    // Formulář handling s vylepšeným error handlingem
     document.getElementById('contactForm').addEventListener('submit', function(e) {
       e.preventDefault();
       
@@ -457,6 +459,8 @@
       const submitBtn = document.getElementById('submitBtn');
       const formFields = document.getElementById('formFields');
       const formSuccess = document.getElementById('formSuccess');
+      
+      console.log('Odesílám formulář...');
       
       // Změň text tlačítka
       submitBtn.textContent = 'Odesílám...';
@@ -470,8 +474,12 @@
           'Accept': 'application/json'
         }
       }).then(response => {
+        console.log('Response status:', response.status);
+        console.log('Response ok:', response.ok);
+        
         if (response.ok) {
           // Úspěch - zobraz potvrzení
+          console.log('Formulář úspěšně odeslán!');
           formFields.style.display = 'none';
           formSuccess.style.display = 'block';
           
@@ -484,10 +492,15 @@
             submitBtn.disabled = false;
           }, 5000);
         } else {
-          throw new Error('Chyba při odesílání');
+          // Zkus přečíst chybovou zprávu
+          response.text().then(errorText => {
+            console.error('Error response:', errorText);
+            throw new Error(`HTTP ${response.status}: ${errorText}`);
+          });
         }
       }).catch(error => {
-        alert('Došlo k chybě při odesílání formuláře. Zkuste to prosím znovu nebo nás kontaktujte telefonicky.');
+        console.error('Fetch error:', error);
+        alert('Došlo k chybě při odesílání formuláře: ' + error.message + '. Zkuste to prosím znovu nebo nás kontaktujte telefonicky na +420 774 528 861.');
         submitBtn.textContent = 'Odeslat poptávku';
         submitBtn.disabled = false;
       });
